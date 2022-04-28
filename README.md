@@ -14,7 +14,10 @@ API that allows to generate fibonacci numbers given a range of dates
 
 ## Installation
 Extract the zip files or clone the repository in your desired folder and then open a console window there.
-The docker and project files are located in different folders so in order to first start the container:
+Install required dependencies with
+> cd src/ && composer install
+
+The docker and project files are located in different folders so in order to start the container:
 > cd docker/ && docker-compose up -d --build
 
 Done!
