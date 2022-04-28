@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Fibonacci Generator</title>
+    <style>
+        html, body {
+            min-height: 100%;
+        }
+
+        body, div, form, input, select, textarea, p {
+            padding: 0;
+            margin: 0;
+            outline: none;
+            font-family: Arial, sans-serif;
+            font-size: 14px;
+            color: #666;
+            line-height: 22px;
+        }
+
+        h1 {
+            position: absolute;
+            margin: 0;
+            font-size: 32px;
+            color: #fff;
+            z-index: 2;
+        }
+
+        h5 {
+            margin: 10px 0;
+        }
+
+        .testbox {
+            width: 75%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: inherit;
+            padding: 20px;
+        }
+
+        form {
+            width: 100%;
+            padding: 20px;
+            border-radius: 6px;
+            background: #fff;
+            box-shadow: 0 0 20px 0 #095484;
+        }
+
+        .banner {
+            position: relative;
+            height: 210px;
+            background-image: url("/images/fibonacci.jpg");
+            background-size: contain;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+        }
+
+        .banner::after {
+            content: "";
+            background-color: rgba(0, 0, 0, 0.5);
+            position: absolute;
+            width: 100%;
+            height: 100%;
+        }
+
+        input, select, textarea {
+            margin-bottom: 10px;
+            border: 1px solid #ccc;
+            border-radius: 3px;
+        }
+
+        input {
+            width: calc(100% - 10px);
+            padding: 5px;
+        }
+
+        input[type="date"]::-webkit-inner-spin-button {
+            display: none;
+        }
+
+        .item i, input[type="date"]::-webkit-calendar-picker-indicator {
+            position: absolute;
+            font-size: 20px;
+            color: #a9a9a9;
+        }
+
+        .item i {
+            right: 2%;
+            top: 30px;
+            z-index: 1;
+        }
+
+        [type="date"]::-webkit-calendar-picker-indicator {
+            right: 1%;
+            z-index: 2;
+            opacity: 0;
+            cursor: pointer;
+        }
+
+        button {
+            width: 150px;
+            padding: 10px;
+            border: none;
+            border-radius: 5px;
+            background: #095484;
+            font-size: 16px;
+            color: #fff;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background: #0666a3;
+        }
+
+        .form-item {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+        }
+
+        .form-item input {
+            width: calc(50% - 20px);
+        }
+
+        .form-item select {
+            width: calc(50% - 8px);
+        }
+
+        .container {
+            margin: 15px;
+        }
+
+        .result-container {
+            visibility: visible;
+        }
+    </style>
+</head>
+<body>
+<div class="testbox">
+    <form id="myForm">
+        <div class="banner">
+            <h1>Fibonacci Numbers between Dates</h1>
+        </div>
+        <div class="container">
+            <div class="form-item">
+                <p>Init Date</p>
+                <input type="date" name="init" required/>
+                <i class="fas fa-calendar-alt"></i>
+            </div>
+            <div class="form-item">
+                <p>Init Date</p>
+                <input type="date" name="end" required/>
+                <i class="fas fa-calendar-alt"></i>
+            </div>
+        </div>
+
+        <div class="btn-block">
+            <button type="submit" href="/">Send Request</button>
+        </div>
+
+        <div class="result-container">
+            <h3>Result:</h3>
+            <textarea id="result" style="width: 100%"></textarea>
+        </div>
+    </form>
+</div>
+
+<script>
+    const resultText = document.getElementById('result');
+
+    resultText.value = "";
+    const myForm = document.getElementById('myForm');
+
+    myForm.addEventListener('submit', function (e) {
+        e.preventDefault();
+
+        const formData = new FormData(this);
+
+        //Because no datetimepicker here and request needs H:i:s format..
+        fetch('/api/numbers?' + new URLSearchParams({
+            "from-date": formData.get('init') +' '+ '00:00:00',
+            "to-date": formData.get('end') +' '+ '23:59:59'
+        }), {
+            method: 'get',
+        }).then(function (response) {
+            return response.json();
+        }).then((function (value) {
+            console.log(value);
+
+            if (value.length > 0) {
+                resultText.value = JSON.stringify(value);
+            } else {
+                resultText.value = 'No result!';
+            }
+        }));
+    });
+</script>
+</body>
+</html>

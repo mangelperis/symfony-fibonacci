@@ -1,0 +1,13 @@
+#index:
+#    path: /
+#    controller: App\Controller\DefaultController::index
+
+api_get_numbers_between_dates:
+  path:       /api/numbers
+  controller: App\Controller\Api\ApiController::get
+  methods:    GET
+
+form_get_numbers_between_dates:
+  path:       /app/form
+  controller: App\Services\Numbers\Form::index
+  methods:    GET
