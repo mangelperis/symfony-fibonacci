@@ -9,5 +9,5 @@ api_get_numbers_between_dates:
 
 form_get_numbers_between_dates:
   path:       /app/form
-  controller: App\Services\Numbers\Form::index
+  controller: App\Controller\Numbers\Form::index
   methods:    GET

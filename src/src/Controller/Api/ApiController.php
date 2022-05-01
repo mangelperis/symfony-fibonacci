@@ -2,17 +2,18 @@
 
 namespace App\Controller\Api;
 
-use App\Repository\FibonacciRepository;
+use App\Services\FibonacciService;
+use App\Services\Helpers;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 
 class ApiController
 {
-    private $fibonacciRepository;
+    private $fibonacciService;
 
-    public function __construct(FibonacciRepository $fibonacciRepository)
+    public function __construct(FibonacciService $fibonacciService)
     {
-        $this->fibonacciRepository = $fibonacciRepository;
+        $this->fibonacciService = $fibonacciService;
     }
 
     /**
@@ -31,13 +32,13 @@ class ApiController
 
             if (null === $from
                 || null === $to
-                || !$this->fibonacciRepository->isStringValidDate($from)
-                || !$this->fibonacciRepository->isStringValidDate($to)
+                || !Helpers::isStringValidDate($from)
+                || !Helpers::isStringValidDate($to)
             ) {
                 throw new \Exception('Incorrect date input param', 400);
             }
 
-            $numbers = $this->fibonacciRepository->numbersBetweenDates($from, $to);
+            $numbers = $this->fibonacciService->numbersBetweenDates($from, $to);
 
             $response->setContent(\json_encode($numbers));
 

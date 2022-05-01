@@ -1,13 +1,10 @@
 <?php
 
-namespace App\Repository;
+namespace App\Services;
 
-use App\Controller\FibonacciGenerator;
-
-class FibonacciRepository extends FibonacciGenerator
+class FibonacciService extends FibonacciGenerator
 {
     const DATE_TIMEZONE = 'UTC';
-    const DATETIME_FORMAT = 'Y-m-d H:i:s';
 
     /**
      * @return array
@@ -51,24 +48,11 @@ class FibonacciRepository extends FibonacciGenerator
      */
     public function numbersBetweenDates(string $init, string $end): array
     {
-        if ($this->isStringValidDate($init) && $this->isStringValidDate($end)) {
+        if (Helpers::isStringValidDate($init) && Helpers::isStringValidDate($end)) {
             return $this->generateNumbers(strtotime($init), strtotime($end));
         }
 
         throw new \Exception('Invalid input date format', 400);
     }
 
-
-    /**
-     * @param $string
-     * @param string $format
-     * @return bool
-     */
-    public function isStringValidDate($string, string $format = self::DATETIME_FORMAT): bool
-    {
-        $d = \DateTime::createFromFormat($format, $string);
-        // The Y ( 4 digits year ) returns TRUE for any integer with any number of digits so changing the comparison from == to === fixes the issue.
-
-        return $d && $d->format($format) === $string;
-    }
 }

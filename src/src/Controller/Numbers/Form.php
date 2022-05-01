@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Services\Numbers;
+namespace App\Controller\Numbers;
 
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
