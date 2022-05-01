@@ -45,31 +45,6 @@ class FibonacciTest extends TestCase
         $this->assertCount(5, $result);
     }
 
-    /**
-     * @throws \Exception
-     */
-    public
-    function testApplicationGenerator2()
-    {
-        //There are five Fibonacci numbers in given range (10-100)
-        $from = '1970-01-01 00:00:10';
-        $to = '1970-01-01 00:01:40';
-
-        $helpersMock = $this->createMock(Helpers::class);
-
-        $helpersMock->method('isStringValidDate2')->willReturn(true);
-
-        $result = $this->fibonacciService->numbersBetweenDates($from, $to);
-
-        $helpersMock->expects($this->exactly(1))->method('isStringValidDate2')->with(
-            'from'
-        );
-        $helpersMock->expects($this->exactly(1))->method('isStringValidDate2')->with(
-            'to'
-        );
-
-    }
-
 
     /**
      * @throws \Exception
